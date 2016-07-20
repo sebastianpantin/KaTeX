@@ -7,7 +7,7 @@
  *
  * Similar functions for working with MathML nodes exist in mathMLTree.js.
  */
-
+var cjkRegex = require("./unicodeRegexes").cjkRegex;
 var utils = require("./utils");
 
 /**
@@ -183,6 +183,12 @@ function symbolNode(value, height, depth, italic, skew, classes, style) {
     this.classes = classes || [];
     this.style = style || {};
     this.maxFontSize = 0;
+
+    if (cjkRegex.test(value)) {
+        // Force serif fonts for CJK glyphs because some browsers/OSs default
+        // to a sans-serif font for these glyphs.
+        this.style['font-family'] = 'serif';
+    }
 }
 
 /**
