@@ -138,9 +138,7 @@ defineFunction("\\text", {
 });
 
 defineFunction("\\testtag", {
-    numArgs: 1,
-    argTypes: ["text"],
-    greediness: 2,
+    numArgs: 0,
 }, function(context, args) {
     return {
         type: "testtag",
