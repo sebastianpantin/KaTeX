@@ -1386,7 +1386,6 @@ var buildGroup = function(group, options, prev) {
         return groupNode;
     } else {
         console.log(groupTypes);
-        
         throw new ParseError(
             "Got group of unknown type: '" + group.type + "'");
     }
