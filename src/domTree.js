@@ -263,7 +263,9 @@ symbolNode.prototype.toMarkup = function() {
 };
 
 // BR
-function br() { };
+function br() {
+    // 
+}
 
 // toNode
 br.prototype.toNode = function() {
