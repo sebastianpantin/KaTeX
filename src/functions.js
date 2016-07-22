@@ -137,6 +137,28 @@ defineFunction("\\text", {
     };
 });
 
+defineFunction("\\testtag", {
+    numArgs: 1,
+    argTypes: ["text"],
+    greediness: 2,
+}, function(context, args) {
+    var body = args[0];
+    // Since the corresponding buildHTML/buildMathML function expects a
+    // list of elements, we normalize for different kinds of arguments
+    // TODO(emily): maybe this should be done somewhere else
+    var inner;
+    if (body.type === "ordgroup") {
+        inner = body.value;
+    } else {
+        inner = [body];
+    }
+
+    return {
+        type: "text",
+        body: inner,
+    };
+});
+
 // A two-argument custom color
 defineFunction("\\color", {
     numArgs: 2,
