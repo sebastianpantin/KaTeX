@@ -243,8 +243,7 @@ groupTypes.text = function(group, options, prev) {
 };
 
 groupTypes.testtag = function(group, options, prev) {
-    return makeSpan(["testtag", "mord", options.style.cls()],
-        buildExpression([], options.reset()));
+    return buildCommon.makeBr();
 };
 
 groupTypes.color = function(group, options, prev) {

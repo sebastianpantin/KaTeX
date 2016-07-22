@@ -262,8 +262,19 @@ symbolNode.prototype.toMarkup = function() {
     }
 };
 
+function br(){};
+
+br.prototype.toNode = function(){
+    return document.createElement("br");
+};
+
+br.prototype.toMarkup = function(){
+    return '<br>';
+};
+
 module.exports = {
     span: span,
     documentFragment: documentFragment,
     symbolNode: symbolNode,
+    br: br,
 };

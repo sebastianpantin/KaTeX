@@ -437,6 +437,10 @@ var fontMap = {
     },
 };
 
+function makeBr(){
+    return new domTree.br();
+};
+
 module.exports = {
     fontMap: fontMap,
     makeSymbol: makeSymbol,
@@ -447,4 +451,5 @@ module.exports = {
     makeOrd: makeOrd,
     sizingMultiplier: sizingMultiplier,
     spacingFunctions: spacingFunctions,
+    makeBr: makeBr,
 };
