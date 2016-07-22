@@ -262,12 +262,17 @@ symbolNode.prototype.toMarkup = function() {
     }
 };
 
-function br(){};
+// BR
+function br(){
+    // some custom BR :)
+};
 
+// toNode
 br.prototype.toNode = function(){
     return document.createElement("br");
 };
 
+// toMarkup
 br.prototype.toMarkup = function(){
     return '<br>';
 };
