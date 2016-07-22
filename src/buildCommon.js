@@ -438,7 +438,7 @@ var fontMap = {
 };
 
 // Make a BR
-var makeBr = function(){
+var makeBr = function() {
     return new domTree.br();
 };
 
