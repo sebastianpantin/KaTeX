@@ -241,6 +241,11 @@ groupTypes.text = function(group, options, prev) {
         buildExpression(group.value.body, options.reset()));
 };
 
+groupTypes.testtag = function(group, options, prev) {
+    return makeSpan(["text", "mord", options.style.cls()],
+        buildExpression([], options.reset()));
+};
+
 groupTypes.color = function(group, options, prev) {
     var elements = buildExpression(
         group.value.value,

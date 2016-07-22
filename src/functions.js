@@ -142,21 +142,8 @@ defineFunction("\\testtag", {
     argTypes: ["text"],
     greediness: 2,
 }, function(context, args) {
-    var body = args[0];
-    console.log(body);
-    // Since the corresponding buildHTML/buildMathML function expects a
-    // list of elements, we normalize for different kinds of arguments
-    // TODO(emily): maybe this should be done somewhere else
-    var inner;
-    if (body.type === "ordgroup") {
-        inner = body.value;
-    } else {
-        inner = [body];
-    }
-
     return {
-        type: "text",
-        body: inner,
+        type: "testtag"
     };
 });
 
