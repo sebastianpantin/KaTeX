@@ -243,7 +243,7 @@ groupTypes.text = function(group, options, prev) {
 };
 
 groupTypes.testtag = function(group, options, prev) {
-    return makeSpan(["text", "mord", options.style.cls()],
+    return makeSpan(["testtag", "mord", options.style.cls()],
         buildExpression([], options.reset()));
 };
 
