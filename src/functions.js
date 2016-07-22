@@ -138,11 +138,10 @@ defineFunction("\\text", {
 });
 
 defineFunction("\\testtag", {
-    numArgs: 1,
-    argTypes: ["text"],
-    greediness: 2,
+    numArgs: 0,
+    argTypes: ["text"]
 }, function(context, args) {
-    var body = args[0];
+    var body = '123';
     // Since the corresponding buildHTML/buildMathML function expects a
     // list of elements, we normalize for different kinds of arguments
     // TODO(emily): maybe this should be done somewhere else
