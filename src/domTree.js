@@ -263,8 +263,14 @@ symbolNode.prototype.toMarkup = function() {
 };
 
 // BR
-function br() {
-    // 
+function br(classes, children, height, depth, maxFontSize, style) {
+    this.classes = classes || [];
+    this.children = children || [];
+    this.height = height || 0;
+    this.depth = depth || 0;
+    this.maxFontSize = maxFontSize || 0;
+    this.style = style || {};
+    this.attributes = {};
 }
 
 // toNode
