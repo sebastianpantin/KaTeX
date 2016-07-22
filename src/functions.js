@@ -143,7 +143,7 @@ defineFunction("\\testtag", {
     greediness: 2,
 }, function(context, args) {
     return {
-        type: "testtag"
+        type: "testtag",
     };
 });
 
