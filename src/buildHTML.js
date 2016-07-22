@@ -40,6 +40,7 @@ var groupToType = {
     bin: "mbin",
     rel: "mrel",
     text: "mord",
+    testtag: "mord",
     open: "mopen",
     close: "mclose",
     inner: "minner",
