@@ -271,6 +271,7 @@ function br(classes, children, height, depth, maxFontSize, style) {
     this.maxFontSize = maxFontSize || 0;
     this.style = style || {
         width: '100%',
+        height: '10px',
     };
     this.attributes = {};
 }
