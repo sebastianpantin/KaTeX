@@ -137,7 +137,7 @@ defineFunction("\\text", {
     };
 });
 
-defineFunction("\\cr", {
+defineFunction("\\newline", {
     numArgs: 0,
 }, function(context, args) {
     return {
