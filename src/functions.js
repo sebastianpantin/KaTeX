@@ -137,7 +137,7 @@ defineFunction("\\text", {
     };
 });
 
-defineFunction("\\\\", {
+defineFunction("\\cr", {
     numArgs: 0,
 }, function(context, args) {
     return {
