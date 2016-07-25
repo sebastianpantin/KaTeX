@@ -277,7 +277,31 @@ function br(classes, children, height, depth, maxFontSize, style) {
 
 // toNode
 br.prototype.toNode = function() {
-    return document.createElement("div");
+    var br = document.createElement("div");
+
+    // Apply the class
+    br.className = createClass(this.classes);
+
+    // Apply inline styles
+    for (var style in this.style) {
+        if (Object.prototype.hasOwnProperty.call(this.style, style)) {
+            br.style[style] = this.style[style];
+        }
+    }
+
+    // Apply attributes
+    for (var attr in this.attributes) {
+        if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+            br.setAttribute(attr, this.attributes[attr]);
+        }
+    }
+
+    // Append the children, also as HTML nodes
+    for (var i = 0; i < this.children.length; i++) {
+        br.appendChild(this.children[i].toNode());
+    }
+
+    return br;
 };
 
 // toMarkup
