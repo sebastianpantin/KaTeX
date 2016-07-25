@@ -147,7 +147,8 @@ defineFunction("\\newline", {
 
 defineFunction("\\formInput", {
     numArgs: 1,
-    argTypes: ["original"],
+    argTypes: ["text"],
+    greediness: 3,
 }, function(context, args) {
     console.log(args);
     var size = 3;
