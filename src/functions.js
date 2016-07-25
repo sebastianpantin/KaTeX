@@ -573,7 +573,7 @@ defineFunction(["\\\\", "\\cr"], {
 }, function(context, args) {
     var size = args[0];
     return {
-        type: "cr",
+        type: "testtag",
         size: size,
     };
 });
