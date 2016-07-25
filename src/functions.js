@@ -146,7 +146,7 @@ defineFunction("\\newline", {
 });
 
 defineFunction("\\formInput", {
-    numArgs: 0,
+    numArgs: 1,
     numOptionalArgs: 1,
 }, function(context, args) {
     console.log(args);
