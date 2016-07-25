@@ -151,6 +151,7 @@ defineFunction("\\formInput", {
     greediness: 2,
 }, function(context, args) {
     var size = args[0];
+    console.log(size);
 
     return {
         type: "input_tag",
