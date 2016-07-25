@@ -147,9 +147,13 @@ defineFunction("\\newline", {
 
 defineFunction("\\formInput", {
     numArgs: 0,
+    numOptionalArgs: 1,
 }, function(context, args) {
+    var size = args[0] || 3;
+
     return {
         type: "input_tag",
+        size: size,
     };
 });
 

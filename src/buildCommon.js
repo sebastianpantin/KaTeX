@@ -443,8 +443,8 @@ var makeBr = function() {
 };
 
 // Make a INPUT
-var makeInput = function() {
-    return new domTree.input();
+var makeInput = function(size) {
+    return new domTree.input(size);
 };
 
 module.exports = {

@@ -311,7 +311,9 @@ br.prototype.toMarkup = function() {
 };
 
 // INPUT
-function input(classes, children, height, depth, maxFontSize, style) {
+function input(size, classes, children, height, depth, maxFontSize, style) {
+    this.size = size || 3;
+
     this.classes = classes || [];
     this.children = children || [];
     this.height = height || 0;
@@ -351,12 +353,14 @@ input.prototype.toNode = function() {
         el.appendChild(this.children[i].toNode());
     }
 
+    el.size = this.size;
+
     return el;
 };
 
 // toMarkup
 input.prototype.toMarkup = function() {
-    return '<input type="text"/>';
+    return '<input type="text" size="'+this.size+'" />';
 };
 
 module.exports = {
