@@ -137,7 +137,7 @@ defineFunction("\\text", {
     };
 });
 
-defineFunction("\\testtag", {
+defineFunction("\\\\", {
     numArgs: 0,
 }, function(context, args) {
     return {
@@ -566,17 +566,17 @@ defineFunction(["\\over", "\\choose"], {
 });
 
 // Row breaks for aligned data
-defineFunction(["\\\\", "\\cr"], {
-    numArgs: 0,
-    numOptionalArgs: 1,
-    argTypes: ["size"],
-}, function(context, args) {
-    var size = args[0];
-    return {
-        type: "testtag",
-        size: size,
-    };
-});
+// defineFunction(["\\\\", "\\cr"], {
+//     numArgs: 0,
+//     numOptionalArgs: 1,
+//     argTypes: ["size"],
+// }, function(context, args) {
+//     var size = args[0];
+//     return {
+//         type: "testtag",
+//         size: size,
+//     };
+// });
 
 // Environment delimiters
 defineFunction(["\\begin", "\\end"], {
