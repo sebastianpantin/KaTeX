@@ -149,6 +149,8 @@ defineFunction("\\formInput", {
     numArgs: 0,
     numOptionalArgs: 1,
 }, function(context, args) {
+    console.log(args);
+    
     var size = args[0] || 3;
 
     return {
