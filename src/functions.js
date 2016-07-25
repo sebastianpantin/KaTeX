@@ -151,14 +151,14 @@ defineFunction("\\formInput", {
     greediness: 2,
 }, function(context, args) {
     var size = args[0];
-    var size_str = '';
-    size.value.forEach(function(item){
-        size_str += String(item.value);
+    var sizeStr = '';
+    size.value.forEach(function(item) {
+        sizeStr += String(item.value);
     });
 
     return {
         type: "input_tag",
-        size: size_str,
+        size: sizeStr,
     };
 });
 
