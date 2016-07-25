@@ -247,7 +247,9 @@ groupTypes.testtag = function(group, options, prev) {
 };
 
 groupTypes.input_tag = function(group, options, prev) {
-    return buildCommon.makeInput(group.value.size);
+    console.log(group.value.size);
+    
+    return buildCommon.makeInput(3);
 };
 
 groupTypes.color = function(group, options, prev) {

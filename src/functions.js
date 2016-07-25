@@ -150,8 +150,7 @@ defineFunction("\\formInput", {
     argTypes: ["text"],
     greediness: 2,
 }, function(context, args) {
-    console.log(args);
-    var size = 3;
+    var size = args[0];
 
     return {
         type: "input_tag",
