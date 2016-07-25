@@ -270,7 +270,7 @@ function br(classes, children, height, depth, maxFontSize, style) {
     this.depth = depth || 0;
     this.maxFontSize = maxFontSize || 0;
     this.style = style || {
-        width: '3999px',
+        width: '100%',
     };
     this.attributes = {};
 }
