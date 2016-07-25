@@ -275,12 +275,12 @@ function br(classes, children, height, depth, maxFontSize, style) {
 
 // toNode
 br.prototype.toNode = function() {
-    return document.createElement("br");
+    return document.createElement("div");
 };
 
 // toMarkup
 br.prototype.toMarkup = function() {
-    return '<br>';
+    return '<div>';
 };
 
 module.exports = {
