@@ -23,11 +23,11 @@ var buildTree = function(tree, expression, settings) {
 
     // `buildHTML` sometimes messes with the parse tree (like turning bins ->
     // ords), so we build the MathML version first.
-    var mathMLNode = buildMathML(tree, expression, options);
+    // var mathMLNode = buildMathML(tree, expression, options);
     var htmlNode = buildHTML(tree, options);
 
     var katexNode = makeSpan(["katex"], [
-        mathMLNode, htmlNode,
+        htmlNode,
     ]);
 
     if (settings.displayMode) {
