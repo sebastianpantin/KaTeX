@@ -360,7 +360,7 @@ input.prototype.toNode = function() {
 
 // toMarkup
 input.prototype.toMarkup = function() {
-    return '<input type="text" size="'+this.size+'" />';
+    return '<input type="text" size="' + this.size + '" />';
 };
 
 module.exports = {
