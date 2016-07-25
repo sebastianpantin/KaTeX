@@ -351,7 +351,7 @@ input.prototype.toNode = function() {
         el.appendChild(this.children[i].toNode());
     }
 
-    el.size = this.size;
+    el.style.width = this.size + 'em';
 
     return el;
 };
