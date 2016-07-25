@@ -147,11 +147,10 @@ defineFunction("\\newline", {
 
 defineFunction("\\formInput", {
     numArgs: 1,
-    numOptionalArgs: 1,
-    argTypes: ["text"],
+    argTypes: ["original"],
 }, function(context, args) {
     console.log(args);
-    var size = args[0] || 3;
+    var size = 3;
 
     return {
         type: "input_tag",
