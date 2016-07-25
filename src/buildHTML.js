@@ -246,6 +246,10 @@ groupTypes.testtag = function(group, options, prev) {
     return buildCommon.makeBr();
 };
 
+groupTypes.input_tag = function(group, options, prev) {
+    return buildCommon.makeInput();
+};
+
 groupTypes.color = function(group, options, prev) {
     var elements = buildExpression(
         group.value.value,

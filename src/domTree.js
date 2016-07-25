@@ -310,9 +310,59 @@ br.prototype.toMarkup = function() {
     return '<div>';
 };
 
+// INPUT
+function input(classes, children, height, depth, maxFontSize, style) {
+    this.classes = classes || [];
+    this.children = children || [];
+    this.height = height || 0;
+    this.depth = depth || 0;
+    this.maxFontSize = maxFontSize || 0;
+    this.style = style || {
+        maxWidth: '35px',
+    };
+    this.attributes = {};
+}
+
+// toNode
+input.prototype.toNode = function() {
+    var el = document.createElement("input");
+
+    el.type = 'text';
+
+    // Apply the class
+    el.className = createClass(this.classes);
+
+    // Apply inline styles
+    for (var style in this.style) {
+        if (Object.prototype.hasOwnProperty.call(this.style, style)) {
+            el.style[style] = this.style[style];
+        }
+    }
+
+    // Apply attributes
+    for (var attr in this.attributes) {
+        if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+            el.setAttribute(attr, this.attributes[attr]);
+        }
+    }
+
+    // Append the children, also as HTML nodes
+    for (var i = 0; i < this.children.length; i++) {
+        el.appendChild(this.children[i].toNode());
+    }
+
+    return el;
+};
+
+// toMarkup
+input.prototype.toMarkup = function() {
+    return '<input type="text"/>';
+};
+
 module.exports = {
     span: span,
     documentFragment: documentFragment,
     symbolNode: symbolNode,
     br: br,
+    input: input,
 };

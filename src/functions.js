@@ -145,6 +145,14 @@ defineFunction("\\newline", {
     };
 });
 
+defineFunction("\\formInput", {
+    numArgs: 0,
+}, function(context, args) {
+    return {
+        type: "input_tag",
+    };
+});
+
 // A two-argument custom color
 defineFunction("\\color", {
     numArgs: 2,

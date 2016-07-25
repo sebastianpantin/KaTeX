@@ -442,6 +442,11 @@ var makeBr = function() {
     return new domTree.br();
 };
 
+// Make a INPUT
+var makeInput = function() {
+    return new domTree.input();
+};
+
 module.exports = {
     fontMap: fontMap,
     makeSymbol: makeSymbol,
@@ -453,4 +458,5 @@ module.exports = {
     sizingMultiplier: sizingMultiplier,
     spacingFunctions: spacingFunctions,
     makeBr: makeBr,
+    makeInput: makeInput,
 };
