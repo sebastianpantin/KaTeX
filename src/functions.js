@@ -148,6 +148,7 @@ defineFunction("\\newline", {
 defineFunction("\\formInput", {
     numArgs: 1,
     numOptionalArgs: 1,
+    argTypes: ["text"],
 }, function(context, args) {
     console.log(args);
     var size = args[0] || 3;
