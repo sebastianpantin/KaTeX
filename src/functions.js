@@ -154,7 +154,7 @@ defineFunction("\\formInput", {
 
     return {
         type: "input_tag",
-        size: size,
+        size: size.value,
     };
 });
 
