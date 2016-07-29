@@ -327,7 +327,7 @@ function input(size, classes, children, height, depth, maxFontSize, style) {
 input.prototype.toNode = function() {
     var el = document.createElement("input");
 
-    el.type = 'number';
+    el.type = 'text';
 
     // Apply the class
     el.className = createClass(this.classes);
