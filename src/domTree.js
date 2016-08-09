@@ -315,8 +315,8 @@ function input(size, objId, clas, child, height, depth, maxFontSize, style) {
     this.size = size || 3;
     this.objId = objId;
 
-    this.clas = clas || [];
-    this.child = child || [];
+    this.classes = clas || [];
+    this.children = child || [];
     this.height = height || 0;
     this.depth = depth || 0;
     this.maxFontSize = maxFontSize || 0;
