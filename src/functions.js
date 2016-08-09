@@ -165,7 +165,7 @@ defineFunction("\\formInput", {
     return {
         type: "input_tag",
         size: sizeStr,
-        domObjId: domObjId
+        domObjId: domObjId,
     };
 });
 

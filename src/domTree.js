@@ -311,7 +311,10 @@ br.prototype.toMarkup = function() {
 };
 
 // INPUT
-function input(size, objId, classes, children, height, depth, maxFontSize, style) {
+function input(
+    size, objId, classes, children, height, 
+    depth, maxFontSize, style
+) {
     this.size = size || 3;
     this.objId = objId;
 
@@ -360,7 +363,9 @@ input.prototype.toNode = function() {
 
 // toMarkup
 input.prototype.toMarkup = function() {
-    return '<input type="text" size="' + this.size + '" id="blk_input_' + this.objId + '" />';
+    return '<input type="text" size="' 
+        + this.size + '" id="blk_input_' 
+        + this.objId + '" />';
 };
 
 module.exports = {
