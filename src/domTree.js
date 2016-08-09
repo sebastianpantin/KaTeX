@@ -367,7 +367,7 @@ input.prototype.toMarkup = function() {
 };
 
 // number INPUT
-function input_number(size, objId, clas, child, height, depth, maxFontSize, style) {
+function input_number(size, objId, clas, child, height, depth, maxFS, style) {
     this.size = size || 3;
     this.objId = objId;
 
@@ -375,7 +375,7 @@ function input_number(size, objId, clas, child, height, depth, maxFontSize, styl
     this.children = child || [];
     this.height = height || 0;
     this.depth = depth || 0;
-    this.maxFontSize = maxFontSize || 0;
+    this.maxFontSize = maxFS || 0;
     this.style = style || {};
     this.attributes = {};
 }
