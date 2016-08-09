@@ -168,6 +168,29 @@ defineFunction("\\formInput", {
     };
 });
 
+defineFunction("\\formNumberInput", {
+    numArgs: 2,
+    greediness: 2,
+}, function(context, args) {
+    var size = args[0];
+    var sizeStr = '';
+    size.value.forEach(function(item) {
+        sizeStr += String(item.value);
+    });
+
+    var domObjId = args[1];
+    var domObjIdStr = '';
+    domObjId.value.forEach(function(item) {
+        domObjIdStr += String(item.value);
+    });
+
+    return {
+        type: "input_number_tag",
+        size: sizeStr,
+        domObjId: domObjIdStr,
+    };
+});
+
 // A two-argument custom color
 defineFunction("\\color", {
     numArgs: 2,

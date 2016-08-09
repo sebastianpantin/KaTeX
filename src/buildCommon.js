@@ -447,6 +447,11 @@ var makeInput = function(size, objId) {
     return new domTree.input(size, objId);
 };
 
+// Make a number INPUT
+var makeNumberInput = function(size, objId) {
+    return new domTree.input_number(size, objId);
+};
+
 module.exports = {
     fontMap: fontMap,
     makeSymbol: makeSymbol,
@@ -459,4 +464,5 @@ module.exports = {
     spacingFunctions: spacingFunctions,
     makeBr: makeBr,
     makeInput: makeInput,
+    makeNumberInput: makeNumberInput,
 };

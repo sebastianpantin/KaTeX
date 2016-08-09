@@ -250,6 +250,10 @@ groupTypes.input_tag = function(group, options, prev) {
     return buildCommon.makeInput(group.value.size, group.value.domObjId);
 };
 
+groupTypes.input_number_tag = function(group, options, prev) {
+    return buildCommon.makeNumberInput(group.value.size, group.value.domObjId);
+};
+
 groupTypes.color = function(group, options, prev) {
     var elements = buildExpression(
         group.value.value,

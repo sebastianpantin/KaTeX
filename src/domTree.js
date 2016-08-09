@@ -366,10 +366,67 @@ input.prototype.toMarkup = function() {
     return res;
 };
 
+// number INPUT
+function input_number(size, objId, clas, child, height, depth, maxFontSize, style) {
+    this.size = size || 3;
+    this.objId = objId;
+
+    this.classes = clas || [];
+    this.children = child || [];
+    this.height = height || 0;
+    this.depth = depth || 0;
+    this.maxFontSize = maxFontSize || 0;
+    this.style = style || {};
+    this.attributes = {};
+}
+
+// toNode
+input_number.prototype.toNode = function() {
+    var el = document.createElement("input");
+
+    el.type = 'number';
+
+    // Apply the class
+    el.className = createClass(this.classes);
+
+    // Apply inline styles
+    for (var style in this.style) {
+        if (Object.prototype.hasOwnProperty.call(this.style, style)) {
+            el.style[style] = this.style[style];
+        }
+    }
+
+    // Apply attributes
+    for (var attr in this.attributes) {
+        if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+            el.setAttribute(attr, this.attributes[attr]);
+        }
+    }
+
+    // Append the children, also as HTML nodes
+    for (var i = 0; i < this.children.length; i++) {
+        el.appendChild(this.children[i].toNode());
+    }
+
+    el.style.width = this.size + 'em';
+    el.id = 'blk_input_' + this.objId;
+
+    return el;
+};
+
+// toMarkup
+input_number.prototype.toMarkup = function() {
+    var res = '<input type="number" size="';
+    res += this.size + '" id="blk_input_';
+    res += this.objId + '" />';
+    return res;
+};
+
 module.exports = {
     span: span,
     documentFragment: documentFragment,
     symbolNode: symbolNode,
     br: br,
     input: input,
+    input_number: input_number,
 };
