@@ -449,7 +449,7 @@ var makeInput = function(size, objId) {
 
 // Make a number INPUT
 var makeNumberInput = function(size, objId) {
-    return new domTree.input_number(size, objId);
+    return new domTree.inputNumber(size, objId);
 };
 
 module.exports = {

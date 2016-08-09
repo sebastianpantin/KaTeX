@@ -367,7 +367,7 @@ input.prototype.toMarkup = function() {
 };
 
 // number INPUT
-function input_number(size, objId, clas, child, height, depth, maxFS, style) {
+function inputNumber(size, objId, clas, child, height, depth, maxFS, style) {
     this.size = size || 3;
     this.objId = objId;
 
@@ -381,7 +381,7 @@ function input_number(size, objId, clas, child, height, depth, maxFS, style) {
 }
 
 // toNode
-input_number.prototype.toNode = function() {
+inputNumber.prototype.toNode = function() {
     var el = document.createElement("input");
 
     el.type = 'number';
@@ -415,7 +415,7 @@ input_number.prototype.toNode = function() {
 };
 
 // toMarkup
-input_number.prototype.toMarkup = function() {
+inputNumber.prototype.toMarkup = function() {
     var res = '<input type="number" size="';
     res += this.size + '" id="blk_input_';
     res += this.objId + '" />';
@@ -428,5 +428,5 @@ module.exports = {
     symbolNode: symbolNode,
     br: br,
     input: input,
-    input_number: input_number,
+    inputNumber: inputNumber,
 };
