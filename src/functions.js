@@ -146,7 +146,7 @@ defineFunction("\\newline", {
 });
 
 defineFunction("\\formInput", {
-    numArgs: 1,
+    numArgs: 2,
     argTypes: ["text"],
     greediness: 2,
 }, function(context, args) {
@@ -156,9 +156,16 @@ defineFunction("\\formInput", {
         sizeStr += String(item.value);
     });
 
+    var domObjId = args[1];
+    var domObjIdStr = '';
+    domObjId.value.forEach(function(item) {
+        domObjIdStr += String(item.value);
+    });
+
     return {
         type: "input_tag",
         size: sizeStr,
+        domObjId: domObjId
     };
 });
 

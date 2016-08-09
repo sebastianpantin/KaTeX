@@ -311,8 +311,9 @@ br.prototype.toMarkup = function() {
 };
 
 // INPUT
-function input(size, classes, children, height, depth, maxFontSize, style) {
+function input(size, objId, classes, children, height, depth, maxFontSize, style) {
     this.size = size || 3;
+    this.objId = objId;
 
     this.classes = classes || [];
     this.children = children || [];
@@ -352,13 +353,14 @@ input.prototype.toNode = function() {
     }
 
     el.style.width = this.size + 'em';
+    el.id = 'blk_input_'+this.objId;
 
     return el;
 };
 
 // toMarkup
 input.prototype.toMarkup = function() {
-    return '<input type="text" size="' + this.size + '" />';
+    return '<input type="text" size="' + this.size + '" id="blk_input_' + this.objId + '" />';
 };
 
 module.exports = {
