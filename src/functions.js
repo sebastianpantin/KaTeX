@@ -155,11 +155,11 @@ defineFunction("\\formInput", {
         sizeStr += String(item.value);
     });
 
-    // var domObjId = args[1];
+    var domObjId = args[1];
     var domObjIdStr = '';
-    // domObjId.value.forEach(function(item) {
-    //     domObjIdStr += String(item.value);
-    // });
+    domObjId.value.forEach(function(item) {
+        domObjIdStr += String(item.value);
+    });
 
     return {
         type: "input_tag",
