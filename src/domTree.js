@@ -384,8 +384,10 @@ function inputNumber(size, objId, clas, child, height, depth, maxFS, style) {
 inputNumber.prototype.toNode = function() {
     var el = document.createElement("input");
 
-    el.type = 'number';
-    el.pattern = '[0-9]*';
+    el.type = 'text';
+    el.oninput = function(){
+        el.value = el.value.replace(/[^0-9\.\,\+\-\*\/]/g, '');
+    };
 
     // Apply the class
     el.className = createClass(this.classes);
@@ -417,7 +419,7 @@ inputNumber.prototype.toNode = function() {
 
 // toMarkup
 inputNumber.prototype.toMarkup = function() {
-    var res = '<input type="number" pattern="[0-9]*" size="';
+    var res = '<input type="text" size="';
     res += this.size + '" id="blk_input_';
     res += this.objId + '" />';
     return res;
