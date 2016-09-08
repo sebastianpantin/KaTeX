@@ -385,8 +385,9 @@ inputNumber.prototype.toNode = function() {
     var el = document.createElement("input");
 
     el.type = 'text';
+
     el.oninput = function(){
-        el.value = el.value.replace(/[^0-9\.\,\+\-\*\/]/g, '');
+        this.value = this.value.replace(/[^0-9\.\,\+\-\*\/]/g, '');
     };
 
     // Apply the class
