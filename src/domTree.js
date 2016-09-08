@@ -386,7 +386,7 @@ inputNumber.prototype.toNode = function() {
 
     el.type = 'text';
 
-    el.oninput = function(){
+    el.oninput = function() {
         this.value = this.value.replace(/[^0-9\.\,\+\-\*\/]/g, '');
     };
 
