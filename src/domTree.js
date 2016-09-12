@@ -354,6 +354,7 @@ input.prototype.toNode = function() {
 
     el.style.width = this.size + 'em';
     el.id = 'blk_input_' + this.objId;
+    el.tabindex = this.objId;
 
     return el;
 };
@@ -362,7 +363,7 @@ input.prototype.toNode = function() {
 input.prototype.toMarkup = function() {
     var res = '<input type="text" size="';
     res += this.size + '" id="blk_input_';
-    res += this.objId + '" />';
+    res += this.objId + '" tabindex="' + this.objId + '" />';
     return res;
 };
 
@@ -414,6 +415,7 @@ inputNumber.prototype.toNode = function() {
 
     el.style.width = this.size + 'em';
     el.id = 'blk_input_' + this.objId;
+    el.tabindex = this.objId;
 
     return el;
 };
@@ -422,7 +424,7 @@ inputNumber.prototype.toNode = function() {
 inputNumber.prototype.toMarkup = function() {
     var res = '<input type="text" size="';
     res += this.size + '" id="blk_input_';
-    res += this.objId + '" />';
+    res += this.objId + '" tabindex="' + this.objId + '" />';
     return res;
 };
 
