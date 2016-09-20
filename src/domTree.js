@@ -355,6 +355,7 @@ input.prototype.toNode = function() {
     el.style.width = this.size + 'em';
     el.id = 'blk_input_' + this.objId;
     el.tabindex = this.objId;
+    el.setAttribute('tabindex', this.objId);
 
     return el;
 };
@@ -416,6 +417,7 @@ inputNumber.prototype.toNode = function() {
     el.style.width = this.size + 'em';
     el.id = 'blk_input_' + this.objId;
     el.tabindex = this.objId;
+    el.setAttribute('tabindex', this.objId);
 
     return el;
 };
