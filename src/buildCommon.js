@@ -185,6 +185,18 @@ var makeSpan = function(classes, children, color) {
     return span;
 };
 
+var makeSpanInput = function(classes, children, color, size, objId, num) {
+    var span = new domTree.spanInput(size, objId, num, classes, children);
+
+    sizeElementFromChildren(span);
+
+    if (color) {
+        span.style.color = color;
+    }
+
+    return span;
+};
+
 /**
  * Makes a document fragment with the given list of children.
  */
@@ -457,6 +469,7 @@ module.exports = {
     makeSymbol: makeSymbol,
     mathsym: mathsym,
     makeSpan: makeSpan,
+    makeSpanInput: makeSpanInput,
     makeFragment: makeFragment,
     makeVList: makeVList,
     makeOrd: makeOrd,

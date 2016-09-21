@@ -137,6 +137,73 @@ defineFunction("\\text", {
     };
 });
 
+defineFunction("\\formInput", {
+    numArgs: 2,
+    argTypes: ["text"],
+    greediness: 2,
+}, function(context, args) {
+    var body = args[0];
+    var inner;
+    if (body.type === "ordgroup") {
+        inner = body.value;
+    } else {
+        inner = [body];
+    }
+
+    var size = args[0];
+    var sizeStr = '';
+    size.value.forEach(function(item) {
+        sizeStr += String(item.value);
+    });
+
+    var domObjId = args[1];
+    var domObjIdStr = '';
+    domObjId.value.forEach(function(item) {
+        domObjIdStr += String(item.value);
+    });
+
+    return {
+        type: "span_input",
+        body: inner,
+        size: sizeStr,
+        domObjId: domObjIdStr,
+    };
+});
+
+defineFunction("\\formNumberInput", {
+    numArgs: 2,
+    argTypes: ["text"],
+    greediness: 2,
+}, function(context, args) {
+    var body = args[0];
+    var inner;
+    if (body.type === "ordgroup") {
+        inner = body.value;
+    } else {
+        inner = [body];
+    }
+
+    var size = args[0];
+    var sizeStr = '';
+    size.value.forEach(function(item) {
+        sizeStr += String(item.value);
+    });
+
+    var domObjId = args[1];
+    var domObjIdStr = '';
+    domObjId.value.forEach(function(item) {
+        domObjIdStr += String(item.value);
+    });
+
+    return {
+        type: "span_input",
+        body: inner,
+        size: sizeStr,
+        domObjId: domObjIdStr,
+        number: true,
+    };
+});
+
 defineFunction("\\newline", {
     numArgs: 0,
 }, function(context, args) {
@@ -145,51 +212,51 @@ defineFunction("\\newline", {
     };
 });
 
-defineFunction("\\formInput", {
-    numArgs: 2,
-    greediness: 2,
-}, function(context, args) {
-    var size = args[0];
-    var sizeStr = '';
-    size.value.forEach(function(item) {
-        sizeStr += String(item.value);
-    });
+// defineFunction("\\formInput", {
+//     numArgs: 2,
+//     greediness: 2,
+// }, function(context, args) {
+//     var size = args[0];
+//     var sizeStr = '';
+//     size.value.forEach(function(item) {
+//         sizeStr += String(item.value);
+//     });
 
-    var domObjId = args[1];
-    var domObjIdStr = '';
-    domObjId.value.forEach(function(item) {
-        domObjIdStr += String(item.value);
-    });
+//     var domObjId = args[1];
+//     var domObjIdStr = '';
+//     domObjId.value.forEach(function(item) {
+//         domObjIdStr += String(item.value);
+//     });
 
-    return {
-        type: "input_tag",
-        size: sizeStr,
-        domObjId: domObjIdStr,
-    };
-});
+//     return {
+//         type: "input_tag",
+//         size: sizeStr,
+//         domObjId: domObjIdStr,
+//     };
+// });
 
-defineFunction("\\formNumberInput", {
-    numArgs: 2,
-    greediness: 2,
-}, function(context, args) {
-    var size = args[0];
-    var sizeStr = '';
-    size.value.forEach(function(item) {
-        sizeStr += String(item.value);
-    });
+// defineFunction("\\formNumberInput", {
+//     numArgs: 2,
+//     greediness: 2,
+// }, function(context, args) {
+//     var size = args[0];
+//     var sizeStr = '';
+//     size.value.forEach(function(item) {
+//         sizeStr += String(item.value);
+//     });
 
-    var domObjId = args[1];
-    var domObjIdStr = '';
-    domObjId.value.forEach(function(item) {
-        domObjIdStr += String(item.value);
-    });
+//     var domObjId = args[1];
+//     var domObjIdStr = '';
+//     domObjId.value.forEach(function(item) {
+//         domObjIdStr += String(item.value);
+//     });
 
-    return {
-        type: "input_number_tag",
-        size: sizeStr,
-        domObjId: domObjIdStr,
-    };
-});
+//     return {
+//         type: "input_number_tag",
+//         size: sizeStr,
+//         domObjId: domObjIdStr,
+//     };
+// });
 
 // A two-argument custom color
 defineFunction("\\color", {
