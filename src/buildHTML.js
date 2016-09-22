@@ -60,6 +60,7 @@ var groupToType = {
     leftright: "minner",
     sqrt: "mord",
     accent: "mord",
+    newline: "mord",
 };
 
 /**

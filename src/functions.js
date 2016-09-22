@@ -208,7 +208,7 @@ defineFunction("\\newline", {
     numArgs: 0,
 }, function(context, args) {
     return {
-        type: "testtag",
+        type: "newline",
     };
 });
 
