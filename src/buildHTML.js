@@ -265,6 +265,10 @@ groupTypes.span_input = function(group, options, prev) {
     );
 };
 
+groupTypes.newline = function(group, options, prev) {
+    return buildCommon.makeBr();
+};
+
 groupTypes.color = function(group, options, prev) {
     var elements = buildExpression(
         group.value.value,
