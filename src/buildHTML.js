@@ -16,6 +16,7 @@ var fontMetrics = require("./fontMetrics");
 var utils = require("./utils");
 
 var makeSpan = buildCommon.makeSpan;
+var makeSpanInput = buildCommon.makeSpanInput;
 
 /**
  * Take a list of nodes, build them in order, and return a list of the built
@@ -40,7 +41,9 @@ var groupToType = {
     bin: "mbin",
     rel: "mrel",
     text: "mord",
-    testtag: "mord",
+    input_tag: "mord",
+    input_number_tag: "mord",
+    span_input: "mord",
     open: "mopen",
     close: "mclose",
     inner: "minner",
@@ -57,6 +60,7 @@ var groupToType = {
     leftright: "minner",
     sqrt: "mord",
     accent: "mord",
+    newline: "mord",
 };
 
 /**
@@ -242,16 +246,27 @@ groupTypes.text = function(group, options, prev) {
         buildExpression(group.value.body, options.reset()));
 };
 
-groupTypes.testtag = function(group, options, prev) {
-    return buildCommon.makeBr();
-};
-
 groupTypes.input_tag = function(group, options, prev) {
     return buildCommon.makeInput(group.value.size, group.value.domObjId);
 };
 
 groupTypes.input_number_tag = function(group, options, prev) {
     return buildCommon.makeNumberInput(group.value.size, group.value.domObjId);
+};
+
+groupTypes.span_input = function(group, options, prev) {
+    return makeSpanInput(
+        ["text", "mord", options.style.cls()],
+        buildExpression(group.value.body, options.reset()),
+        null,
+        group.value.size,
+        group.value.domObjId,
+        group.value.number
+    );
+};
+
+groupTypes.newline = function(group, options, prev) {
+    return buildCommon.makeBr();
 };
 
 groupTypes.color = function(group, options, prev) {
