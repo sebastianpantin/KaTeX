@@ -367,7 +367,7 @@ groupTypes.supsub = function(group, options, prev) {
 
         supsub = buildCommon.makeVList([
             {type: "elem", elem: supmid},
-        ], "shift", -supShift - 1, options);
+        ], "shift", -supShift, options);
 
         supsub.children[0].style.marginRight = scriptspace;
     } else {
