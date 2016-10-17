@@ -367,7 +367,7 @@ groupTypes.supsub = function(group, options, prev) {
 
         supsub = buildCommon.makeVList([
             {type: "elem", elem: supmid},
-        ], "shift", -supShift, options);
+        ], "shift", -supShift - 1, options);
 
         supsub.children[0].style.marginRight = scriptspace;
     } else {
@@ -392,7 +392,7 @@ groupTypes.supsub = function(group, options, prev) {
 
         supsub = buildCommon.makeVList([
             {type: "elem", elem: submid, shift: subShift},
-            {type: "elem", elem: supmid, shift: -supShift - 1},
+            {type: "elem", elem: supmid, shift: -supShift},
         ], "individualShift", null, options);
 
         // See comment above about subscripts not being shifted
