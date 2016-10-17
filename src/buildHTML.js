@@ -350,7 +350,7 @@ groupTypes.supsub = function(group, options, prev) {
 
         supsub = buildCommon.makeVList([
             {type: "elem", elem: submid},
-        ], "shift", subShift + 0.5, options);
+        ], "shift", subShift, options);
 
         supsub.children[0].style.marginRight = scriptspace;
 
@@ -391,7 +391,7 @@ groupTypes.supsub = function(group, options, prev) {
         }
 
         supsub = buildCommon.makeVList([
-            {type: "elem", elem: submid, shift: subShift + 0.5},
+            {type: "elem", elem: submid, shift: subShift},
             {type: "elem", elem: supmid, shift: -supShift - 1},
         ], "individualShift", null, options);
 
