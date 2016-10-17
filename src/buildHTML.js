@@ -321,7 +321,7 @@ groupTypes.supsub = function(group, options, prev) {
         subShift = 0;
     } else {
         supShift = base.height - fontMetrics.metrics.supDrop;
-        subShift = base.depth + fontMetrics.metrics.subDrop;
+        subShift = base.depth + fontMetrics.metrics.subDrop + 1;
     }
 
     // Rule 18c
@@ -363,7 +363,7 @@ groupTypes.supsub = function(group, options, prev) {
     } else if (!group.value.sub) {
         // Rule 18c, d
         supShift = Math.max(supShift, minSupShift,
-            sup.depth + 0.45 * fontMetrics.metrics.xHeight);
+            sup.depth + 0.25 * fontMetrics.metrics.xHeight);
 
         supsub = buildCommon.makeVList([
             {type: "elem", elem: supmid},
