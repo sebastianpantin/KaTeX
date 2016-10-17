@@ -363,11 +363,11 @@ groupTypes.supsub = function(group, options, prev) {
     } else if (!group.value.sub) {
         // Rule 18c, d
         supShift = Math.max(supShift, minSupShift,
-            sup.depth + 0.25 * fontMetrics.metrics.xHeight);
+            sup.depth + 0.45 * fontMetrics.metrics.xHeight);
 
         supsub = buildCommon.makeVList([
             {type: "elem", elem: supmid},
-        ], "shift", -supShift - 1, options);
+        ], "shift", -supShift, options);
 
         supsub.children[0].style.marginRight = scriptspace;
     } else {
