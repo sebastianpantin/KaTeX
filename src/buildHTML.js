@@ -365,8 +365,6 @@ groupTypes.supsub = function(group, options, prev) {
         supShift = Math.max(supShift, minSupShift,
             sup.depth + 0.25 * fontMetrics.metrics.xHeight);
 
-        console.log(group, options);
-
         supsub = buildCommon.makeVList([
             {type: "elem", elem: supmid},
         ], "shift", -supShift, options);
