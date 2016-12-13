@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Khan/KaTeX.git"
+    "url": "https://github.com/mrAlbert-development/KaTeX.git"
   },
   "ignore": [
     "**/.*",
