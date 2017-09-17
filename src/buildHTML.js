@@ -17,8 +17,6 @@ import { calculateSize } from "./units";
 import utils from "./utils";
 import stretchy from "./stretchy";
 
-const makeSpanInput = buildCommon.makeSpanInput;
-
 const isSpace = function(node) {
     return node instanceof domTree.span && node.classes[0] === "mspace";
 };
@@ -327,9 +325,9 @@ groupTypes.input_number_tag = function(group, options) {
 };
 
 groupTypes.span_input = function(group, options) {
-    return makeSpanInput(
-        ["text", "mord", options.style.cls()],
-        buildExpression(group.value.body, options.reset()),
+    return buildCommon.makeSpanInput(
+        ["text", "mord"],
+        buildExpression(group.value.body, options),
         null,
         group.value.size,
         group.value.domObjId,

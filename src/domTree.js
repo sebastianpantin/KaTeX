@@ -464,13 +464,13 @@ class br {
         br.className = createClass(this.classes);
         // Apply inline styles
         for (const style in this.style) {
-            if (Object.hasOwnProperty.call(this.style, style)) {
+            if (Object.prototype.hasOwnProperty.call(this.style, style)) {
                 br.style[style] = this.style[style];
             }
         }
         // Apply attributes
         for (const attr in this.attributes) {
-            if (Object.hasOwnProperty.call(this.attributes, attr)) {
+            if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
                 br.setAttribute(attr, this.attributes[attr]);
             }
         }
@@ -516,14 +516,14 @@ class input {
 
         // Apply inline styles
         for (const style in this.style) {
-            if (Object.hasOwnProperty.call(this.style, style)) {
+            if (Object.prototype.hasOwnProperty.call(this.style, style)) {
                 el.style[style] = this.style[style];
             }
         }
 
         // Apply attributes
         for (const attr in this.attributes) {
-            if (Object.hasOwnProperty.call(this.attributes, attr)) {
+            if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
                 el.setAttribute(attr, this.attributes[attr]);
             }
         }
@@ -536,7 +536,7 @@ class input {
         el.style.width = this.size + 'em';
         el.id = 'blk_input_' + this.objId;
         el.tabindex = +this.objId + 1;
-        el.setAttribute('tabindex', +this.objId + 1);
+        el.setAttribute('tabindex', this.objId + 1);
 
         return el;
     }
@@ -583,14 +583,14 @@ class inputNumber {
 
         // Apply inline styles
         for (const style in this.style) {
-            if (Object.hasOwnProperty.call(this.style, style)) {
+            if (Object.prototype.hasOwnProperty.call(this.style, style)) {
                 el.style[style] = this.style[style];
             }
         }
 
         // Apply attributes
         for (const attr in this.attributes) {
-            if (Object.hasOwnProperty.call(this.attributes, attr)) {
+            if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
                 el.setAttribute(attr, this.attributes[attr]);
             }
         }
@@ -603,7 +603,7 @@ class inputNumber {
         el.style.width = this.size + 'em';
         el.id = 'blk_input_' + this.objId;
         el.tabindex = +this.objId + 1;
-        el.setAttribute('tabindex', +this.objId + 1);
+        el.setAttribute('tabindex', this.objId + 1);
 
         return el;
     }
@@ -643,14 +643,14 @@ class spanInput {
 
         // Apply inline styles
         for (const style in this.style) {
-            if (Object.hasOwnProperty.call(this.style, style)) {
+            if (Object.prototype.hasOwnProperty.call(this.style, style)) {
                 span.style[style] = this.style[style];
             }
         }
 
         // Apply attributes
         for (const attr in this.attributes) {
-            if (Object.hasOwnProperty.call(this.attributes, attr)) {
+            if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
                 span.setAttribute(attr, this.attributes[attr]);
             }
         }
@@ -664,7 +664,7 @@ class spanInput {
         inp.style.width = this.size + 'em';
         inp.id = 'blk_input_' + this.objId;
         inp.tabindex = +this.objId + 1;
-        inp.setAttribute('tabindex', +this.objId + 1);
+        inp.setAttribute('tabindex', this.objId + 1);
 
         if (this.is_number) {
             inp.oninput = function() {
@@ -702,7 +702,7 @@ class spanInput {
 
         // Add the attributes
         for (const attr in this.attributes) {
-            if (Object.hasOwnProperty.call(this.attributes, attr)) {
+            if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
                 markup += " " + attr + "=\"";
                 markup += utils.escape(this.attributes[attr]);
                 markup += "\"";

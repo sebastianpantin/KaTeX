@@ -104,12 +104,6 @@ compress: build/katex.min.js build/katex.min.css
 serve: $(NIS)
 	$(NPM) start
 
-flow: $(NIS)
-	$(NPM) run flow
-
-test: $(NIS)
-	$(NPM) test
-
 coverage: $(NIS)
 	$(NPM) run coverage
 

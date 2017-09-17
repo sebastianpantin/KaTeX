@@ -1,5 +1,5 @@
 import buildHTML from "./buildHTML";
-import buildMathML from "./buildMathML";
+//import buildMathML from "./buildMathML";
 import { makeSpan } from "./buildCommon";
 import Options from "./Options";
 import Settings from "./Settings";
@@ -21,11 +21,11 @@ const buildTree = function(tree, expression, settings) {
 
     // `buildHTML` sometimes messes with the parse tree (like turning bins ->
     // ords), so we build the MathML version first.
-    const mathMLNode = buildMathML(tree, expression, options);
+    //const mathMLNode = buildMathML(tree, expression, options);
     const htmlNode = buildHTML(tree, options);
 
     const katexNode = makeSpan(["katex"], [
-        mathMLNode, htmlNode,
+        htmlNode,
     ]);
 
     if (settings.displayMode) {
