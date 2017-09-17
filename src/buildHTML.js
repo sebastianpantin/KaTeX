@@ -325,7 +325,7 @@ groupTypes.input_number_tag = function(group, options, prev) {
 };
 
 groupTypes.span_input = function(group, options, prev) {
-    return makeSpanInput(
+    return buildCommon.makeSpanInput(
         ["text", "mord", options.style.cls()],
         buildExpression(group.value.body, options.reset()),
         null,
@@ -340,7 +340,7 @@ groupTypes.newline = function(group, options, prev) {
 };
 
 groupTypes.color = function(group, options, prev) {
-    var elements = buildExpression(
+    const elements = buildExpression(
         group.value.value,
         options.withColor(group.value.color),
         false

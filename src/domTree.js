@@ -459,27 +459,27 @@ function br(classes, children, height, depth, maxFontSize, style) {
 
 // toNode
 br.prototype.toNode = function() {
-    var br = document.createElement("div");
+    const br = document.createElement("div");
 
     // Apply the class
     br.className = createClass(this.classes);
 
     // Apply inline styles
-    for (var style in this.style) {
+    for (const style in this.style) {
         if (Object.prototype.hasOwnProperty.call(this.style, style)) {
             br.style[style] = this.style[style];
         }
     }
 
     // Apply attributes
-    for (var attr in this.attributes) {
+    for (const attr in this.attributes) {
         if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
             br.setAttribute(attr, this.attributes[attr]);
         }
     }
 
     // Append the children, also as HTML nodes
-    for (var i = 0; i < this.children.length; i++) {
+    for (let i = 0; i < this.children.length; i++) {
         br.appendChild(this.children[i].toNode());
     }
 
@@ -511,7 +511,7 @@ input.prototype.setAttribute = function(attribute, value) {
 
 // toNode
 input.prototype.toNode = function() {
-    var el = document.createElement("input");
+    const el = document.createElement("input");
 
     el.type = 'text';
 
@@ -519,21 +519,21 @@ input.prototype.toNode = function() {
     el.className = createClass(this.classes);
 
     // Apply inline styles
-    for (var style in this.style) {
+    for (const style in this.style) {
         if (Object.prototype.hasOwnProperty.call(this.style, style)) {
             el.style[style] = this.style[style];
         }
     }
 
     // Apply attributes
-    for (var attr in this.attributes) {
+    for (const attr in this.attributes) {
         if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
             el.setAttribute(attr, this.attributes[attr]);
         }
     }
 
     // Append the children, also as HTML nodes
-    for (var i = 0; i < this.children.length; i++) {
+    for (let i = 0; i < this.children.length; i++) {
         el.appendChild(this.children[i].toNode());
     }
 
@@ -547,7 +547,7 @@ input.prototype.toNode = function() {
 
 // toMarkup
 input.prototype.toMarkup = function() {
-    var res = '<input type="text" size="';
+    let res = '<input type="text" size="';
     res += this.size + '" id="blk_input_';
     res += this.objId + '" tabindex="' + (+this.objId + 1) + '" />';
     return res;
@@ -573,33 +573,33 @@ inputNumber.prototype.setAttribute = function(attribute, value) {
 
 // toNode
 inputNumber.prototype.toNode = function() {
-    var el = document.createElement("input");
+    const el = document.createElement("input");
 
     el.type = 'text';
 
     el.oninput = function() {
-        this.value = this.value.replace(/[^0-9\.\,\+\-\*\/]/g, '');
+        this.value = this.value.replace(/[^0-9.,+\-*/]/g, '');
     };
 
     // Apply the class
     el.className = createClass(this.classes);
 
     // Apply inline styles
-    for (var style in this.style) {
+    for (const style in this.style) {
         if (Object.prototype.hasOwnProperty.call(this.style, style)) {
             el.style[style] = this.style[style];
         }
     }
 
     // Apply attributes
-    for (var attr in this.attributes) {
+    for (const attr in this.attributes) {
         if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
             el.setAttribute(attr, this.attributes[attr]);
         }
     }
 
     // Append the children, also as HTML nodes
-    for (var i = 0; i < this.children.length; i++) {
+    for (let i = 0; i < this.children.length; i++) {
         el.appendChild(this.children[i].toNode());
     }
 
@@ -613,7 +613,7 @@ inputNumber.prototype.toNode = function() {
 
 // toMarkup
 inputNumber.prototype.toMarkup = function() {
-    var res = '<input type="text" size="';
+    let res = '<input type="text" size="';
     res += this.size + '" id="blk_input_';
     res += this.objId + '" tabindex="' + (+this.objId + 1) + '" />';
     return res;
@@ -638,20 +638,20 @@ spanInput.prototype.setAttribute = function(attribute, value) {
 };
 
 spanInput.prototype.toNode = function() {
-    var span = document.createElement("span");
+    const span = document.createElement("span");
 
     // Apply the class
     span.className = createClass(this.classes);
 
     // Apply inline styles
-    for (var style in this.style) {
+    for (const style in this.style) {
         if (Object.prototype.hasOwnProperty.call(this.style, style)) {
             span.style[style] = this.style[style];
         }
     }
 
     // Apply attributes
-    for (var attr in this.attributes) {
+    for (const attr in this.attributes) {
         if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
             span.setAttribute(attr, this.attributes[attr]);
         }
@@ -662,7 +662,7 @@ spanInput.prototype.toNode = function() {
     //     span.appendChild(this.children[i].toNode());
     // }
 
-    var inp = document.createElement('input');
+    const inp = document.createElement('input');
     inp.style.width = this.size + 'em';
     inp.id = 'blk_input_' + this.objId;
     inp.tabindex = +this.objId + 1;
@@ -670,7 +670,7 @@ spanInput.prototype.toNode = function() {
 
     if (this.is_number) {
         inp.oninput = function() {
-            this.value = this.value.replace(/[^0-9\.\,\+\-\*\/]/g, '');
+            this.value = this.value.replace(/[^0-9.,+\-*/]/g, '');
         };
     }
 
@@ -680,7 +680,7 @@ spanInput.prototype.toNode = function() {
 };
 
 spanInput.prototype.toMarkup = function() {
-    var markup = "<span";
+    let markup = "<span";
 
     // Add the class
     if (this.classes.length) {
@@ -689,10 +689,10 @@ spanInput.prototype.toMarkup = function() {
         markup += "\"";
     }
 
-    var styles = "";
+    let styles = "";
 
     // Add the styles, after hyphenation
-    for (var style in this.style) {
+    for (const style in this.style) {
         if (this.style.hasOwnProperty(style)) {
             styles += utils.hyphenate(style) + ":" + this.style[style] + ";";
         }
@@ -703,7 +703,7 @@ spanInput.prototype.toMarkup = function() {
     }
 
     // Add the attributes
-    for (var attr in this.attributes) {
+    for (const attr in this.attributes) {
         if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
             markup += " " + attr + "=\"";
             markup += utils.escape(this.attributes[attr]);
@@ -718,7 +718,7 @@ spanInput.prototype.toMarkup = function() {
     //     markup += this.children[i].toMarkup();
     // }
 
-    var inp = '<input type="text" style="width: ';
+    let inp = '<input type="text" style="width: ';
     inp += this.size + 'em;" id="blk_input_';
     inp += this.objId + '" tabindex="' + (+this.objId + 1) + '" />';
 

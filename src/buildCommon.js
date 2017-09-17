@@ -212,8 +212,8 @@ const makeSpan = function(classes, children, options) {
     return span;
 };
 
-var makeSpanInput = function(classes, children, color, size, objId, num) {
-    var span = new domTree.spanInput(size, objId, num, classes, children);
+const makeSpanInput = function(classes, children, color, size, objId, num) {
+    const span = new domTree.spanInput(size, objId, num, classes, children);
 
     sizeElementFromChildren(span);
 
@@ -492,17 +492,17 @@ const fontMap = {
 };
 
 // Make a BR
-var makeBr = function() {
+const makeBr = function() {
     return new domTree.br();
 };
 
 // Make a INPUT
-var makeInput = function(size, objId) {
+const makeInput = function(size, objId) {
     return new domTree.input(size, objId);
 };
 
 // Make a number INPUT
-var makeNumberInput = function(size, objId) {
+const makeNumberInput = function(size, objId) {
     return new domTree.inputNumber(size, objId);
 };
 
