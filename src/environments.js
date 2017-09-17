@@ -1,29 +1,112 @@
-/* eslint no-constant-condition:0 */
-var fontMetrics = require("./fontMetrics");
-var parseData = require("./parseData");
-var ParseError = require("./ParseError");
+// @flow
+import ParseNode from "./ParseNode";
+import ParseError from "./ParseError";
 
-var ParseNode = parseData.ParseNode;
+import type Parser from "./Parser";
+import type {ArgType, Mode, StyleStr} from "./types";
+
+/**
+ * The context contains the following properties:
+ *  - mode: current parsing mode.
+ *  - envName: the name of the environment, one of the listed names.
+ *  - parser: the parser object.
+ */
+type EnvContext = {
+    mode: Mode,
+    envName: string,
+    parser: Parser,
+};
+
+/**
+ * The handler function receives two arguments
+ *  - context: information and references provided by the parser
+ *  - args: an array of arguments passed to \begin{name}
+ */
+type EnvHandler = (context: EnvContext, args: ParseNode[]) => ParseNode;
+
+/**
+ *  - numArgs: (default 0) The number of arguments after the \begin{name} function.
+ *  - argTypes: (optional) Just like for a function
+ *  - allowedInText: (default false) Whether or not the environment is allowed
+ *                   inside text mode (not enforced yet).
+ *  - numOptionalArgs: (default 0) Just like for a function
+ */
+type EnvProps = {
+    numArgs?: number,
+    argTypes?: ArgType[],
+    allowedInText?: boolean,
+    numOptionalArgs?: number,
+};
+
+type EnvData = {
+    numArgs: number,
+    argTypes?: ArgType[],
+    greediness: number,
+    allowedInText: boolean,
+    numOptionalArgs: number,
+    handler: EnvHandler,
+};
+const environments: {[string]: EnvData} = {};
+export default environments;
+
+// Data stored in the ParseNode associated with the environment.
+type AlignSpec = { type: "separator", separator: string } | {
+    type: "align",
+    align: string,
+    pregap?: number,
+    postgap?: number,
+};
+type ArrayEnvNodeData = {
+    type: "array",
+    hskipBeforeAndAfter?: boolean,
+    arraystretch?: number,
+    addJot?: boolean,
+    cols?: AlignSpec[],
+    // These fields are always set, but not on struct construction
+    // initialization.
+    body?: ParseNode[][], // List of rows in the (2D) array.
+    rowGaps?: number[],
+};
 
 /**
  * Parse the body of the environment, with rows delimited by \\ and
  * columns delimited by &, and create a nested list in row-major order
- * with one group per cell.
+ * with one group per cell.  If given an optional argument style
+ * ("text", "display", etc.), then each cell is cast into that style.
  */
-function parseArray(parser, result) {
-    var row = [];
-    var body = [row];
-    var rowGaps = [];
-    while (true) {
-        var cell = parser.parseExpression(false, null);
-        row.push(new ParseNode("ordgroup", cell, parser.mode));
-        var next = parser.nextToken.text;
+function parseArray(
+    parser: Parser,
+    result: ArrayEnvNodeData,
+    style: StyleStr,
+): ParseNode {
+    let row = [];
+    const body = [row];
+    const rowGaps = [];
+    for (;;) {
+        let cell = parser.parseExpression(false, null);
+        cell = new ParseNode("ordgroup", cell, parser.mode);
+        if (style) {
+            cell = new ParseNode("styling", {
+                style: style,
+                value: [cell],
+            }, parser.mode);
+        }
+        row.push(cell);
+        const next = parser.nextToken.text;
         if (next === "&") {
             parser.consume();
         } else if (next === "\\end") {
+            // Arrays terminate newlines with `\crcr` which consumes a `\cr` if
+            // the last line is empty.
+            const lastRow = body[body.length - 1][0].value;
+            if (body.length > 1
+                && lastRow.value.length === 1
+                && lastRow.value[0].value.length === 0) {
+                body.pop();
+            }
             break;
         } else if (next === "\\\\" || next === "\\cr") {
-            var cr = parser.parseFunction();
+            const cr = parser.parseFunction();
             rowGaps.push(cr.value.size);
             row = [];
             body.push(row);
@@ -37,39 +120,19 @@ function parseArray(parser, result) {
     return new ParseNode(result.type, result, parser.mode);
 }
 
+
 /*
  * An environment definition is very similar to a function definition:
- * it is declared with a name or a list of names, a set of properties
- * and a handler containing the actual implementation.
- *
- * The properties include:
- *  - numArgs: The number of arguments after the \begin{name} function.
- *  - argTypes: (optional) Just like for a function
- *  - allowedInText: (optional) Whether or not the environment is allowed inside
- *                   text mode (default false) (not enforced yet)
- *  - numOptionalArgs: (optional) Just like for a function
- * A bare number instead of that object indicates the numArgs value.
- *
- * The handler function will receive two arguments
- *  - context: information and references provided by the parser
- *  - args: an array of arguments passed to \begin{name}
- * The context contains the following properties:
- *  - envName: the name of the environment, one of the listed names.
- *  - parser: the parser object
- *  - lexer: the lexer object
- *  - positions: the positions associated with these arguments from args.
- * The handler must return a ParseResult.
+ * it is declared with a list of names, a set of properties and a handler
+ * containing the actual implementation.
  */
-
-function defineEnvironment(names, props, handler) {
-    if (typeof names === "string") {
-        names = [names];
-    }
-    if (typeof props === "number") {
-        props = { numArgs: props };
-    }
+function defineEnvironment(
+    names: string[],
+    props: EnvProps,
+    handler: EnvHandler,
+) {
     // Set default values of environments
-    var data = {
+    const data = {
         numArgs: props.numArgs || 0,
         argTypes: props.argTypes,
         greediness: 1,
@@ -77,20 +140,32 @@ function defineEnvironment(names, props, handler) {
         numOptionalArgs: props.numOptionalArgs || 0,
         handler: handler,
     };
-    for (var i = 0; i < names.length; ++i) {
-        module.exports[names[i]] = data;
+    for (let i = 0; i < names.length; ++i) {
+        environments[names[i]] = data;
+    }
+}
+
+// Decides on a style for cells in an array according to whether the given
+// environment name starts with the letter 'd'.
+function dCellStyle(envName): StyleStr {
+    if (envName.substr(0, 1) === "d") {
+        return "display";
+    } else {
+        return "text";
     }
 }
 
 // Arrays are part of LaTeX, defined in lttab.dtx so its documentation
 // is part of the source2e.pdf file of LaTeX2e source documentation.
-defineEnvironment("array", {
+// {darray} is an {array} environment where cells are set in \displaystyle,
+// as defined in nccmath.sty.
+defineEnvironment(["array", "darray"], {
     numArgs: 1,
 }, function(context, args) {
-    var colalign = args[0];
+    let colalign = args[0];
     colalign = colalign.value.map ? colalign.value : [colalign];
-    var cols = colalign.map(function(node) {
-        var ca = node.value;
+    const cols = colalign.map(function(node) {
+        const ca = node.value;
         if ("lcr".indexOf(ca) !== -1) {
             return {
                 type: "align",
@@ -106,12 +181,12 @@ defineEnvironment("array", {
             "Unknown column alignment: " + node.value,
             node);
     });
-    var res = {
+    let res = {
         type: "array",
         cols: cols,
         hskipBeforeAndAfter: true, // \@preamble in lttab.dtx
     };
-    res = parseArray(context.parser, res);
+    res = parseArray(context.parser, res, dCellStyle(context.envName));
     return res;
 });
 
@@ -126,7 +201,7 @@ defineEnvironment([
     "Vmatrix",
 ], {
 }, function(context) {
-    var delimiters = {
+    const delimiters = {
         "matrix": null,
         "pmatrix": ["(", ")"],
         "bmatrix": ["[", "]"],
@@ -134,11 +209,11 @@ defineEnvironment([
         "vmatrix": ["|", "|"],
         "Vmatrix": ["\\Vert", "\\Vert"],
     }[context.envName];
-    var res = {
+    let res = {
         type: "array",
         hskipBeforeAndAfter: false, // \hskip -\arraycolsep in amsmath
     };
-    res = parseArray(context.parser, res);
+    res = parseArray(context.parser, res, dCellStyle(context.envName));
     if (delimiters) {
         res = new ParseNode("leftright", {
             body: [res],
@@ -152,16 +227,25 @@ defineEnvironment([
 // A cases environment (in amsmath.sty) is almost equivalent to
 // \def\arraystretch{1.2}%
 // \left\{\begin{array}{@{}l@{\quad}l@{}} … \end{array}\right.
-defineEnvironment("cases", {
+// {dcases} is a {cases} environment where cells are set in \displaystyle,
+// as defined in mathtools.sty.
+defineEnvironment([
+    "cases",
+    "dcases",
+], {
 }, function(context) {
-    var res = {
+    let res = {
         type: "array",
         arraystretch: 1.2,
         cols: [{
             type: "align",
             align: "l",
             pregap: 0,
-            postgap: fontMetrics.metrics.quad,
+            // TODO(kevinb) get the current style.
+            // For now we use the metrics for TEXT style which is what we were
+            // doing before.  Before attempting to get the current style we
+            // should look at TeX's behavior especially for \over and matrices.
+            postgap: 1.0, /* 1em quad */
         }, {
             type: "align",
             align: "l",
@@ -169,7 +253,7 @@ defineEnvironment("cases", {
             postgap: 0,
         }],
     };
-    res = parseArray(context.parser, res);
+    res = parseArray(context.parser, res, dCellStyle(context.envName));
     res = new ParseNode("leftright", {
         body: [res],
         left: "\\{",
@@ -182,27 +266,33 @@ defineEnvironment("cases", {
 // except it operates within math mode.
 // Note that we assume \nomallineskiplimit to be zero,
 // so that \strut@ is the same as \strut.
-defineEnvironment("aligned", {
+defineEnvironment(["aligned"], {
 }, function(context) {
-    var res = {
+    let res = {
         type: "array",
         cols: [],
+        addJot: true,
     };
-    res = parseArray(context.parser, res);
-    var emptyGroup = new ParseNode("ordgroup", [], context.mode);
-    var numCols = 0;
+    res = parseArray(context.parser, res, "display");
+    // Count number of columns = maximum number of cells in each row.
+    // At the same time, prepend empty group {} at beginning of every second
+    // cell in each row (starting with second cell) so that operators become
+    // binary.  This behavior is implemented in amsmath's \start@aligned.
+    const emptyGroup = new ParseNode("ordgroup", [], context.mode);
+    let numCols = 0;
     res.value.body.forEach(function(row) {
-        var i;
-        for (i = 1; i < row.length; i += 2) {
-            row[i].value.unshift(emptyGroup);
+        for (let i = 1; i < row.length; i += 2) {
+            // Modify ordgroup node within styling node
+            const ordgroup = row[i].value.value[0];
+            ordgroup.value.unshift(emptyGroup);
         }
         if (numCols < row.length) {
             numCols = row.length;
         }
     });
-    for (var i = 0; i < numCols; ++i) {
-        var align = "r";
-        var pregap = 0;
+    for (let i = 0; i < numCols; ++i) {
+        let align = "r";
+        let pregap = 0;
         if (i % 2 === 1) {
             align = "l";
         } else if (i > 0) {
@@ -215,5 +305,22 @@ defineEnvironment("aligned", {
             postgap: 0,
         };
     }
+    return res;
+});
+
+// A gathered environment is like an array environment with one centered
+// column, but where rows are considered lines so get \jot line spacing
+// and contents are set in \displaystyle.
+defineEnvironment(["gathered"], {
+}, function(context) {
+    let res = {
+        type: "array",
+        cols: [{
+            type: "align",
+            align: "c",
+        }],
+        addJot: true,
+    };
+    res = parseArray(context.parser, res, "display");
     return res;
 });

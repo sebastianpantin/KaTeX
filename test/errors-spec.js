@@ -1,59 +1,55 @@
 /* global beforeEach: false */
-/* global jasmine: false */
 /* global expect: false */
 /* global it: false */
 /* global describe: false */
 
-var parseTree = require("../src/parseTree");
-var Settings = require("../src/Settings");
+import parseTree from "../src/parseTree";
+import Settings from "../src/Settings";
 
-var defaultSettings = new Settings({});
+const defaultSettings = new Settings({});
 
 beforeEach(function() {
-    jasmine.addMatchers({
-        toFailWithParseError: function(util, customEqualityTesters) {
-            var prefix = "KaTeX parse error: ";
-            return {
-                compare: function(actual, expected) {
-                    try {
-                        parseTree(actual, defaultSettings);
-                        return {
-                            pass: false,
-                            message: "'" + actual + "' parsed without error",
-                        };
-                    } catch (e) {
-                        if (expected === undefined) {
-                            return {
-                                pass: true,
-                                message: "'" + actual + "' parsed with error",
-                            };
-                        }
-                        var msg = e.message;
-                        var exp = prefix + expected;
-                        if (msg === exp) {
-                            return {
-                                pass: true,
-                                message: "'" + actual + "'" +
-                                    " parsed with error '" + expected + "'",
-                            };
-                        } else if (msg.slice(0, 19) === prefix) {
-                            return {
-                                pass: false,
-                                message: "'" + actual + "'" +
-                                    " parsed with error '" + msg.slice(19) +
-                                    "' but expected '" + expected + "'",
-                            };
-                        } else {
-                            return {
-                                pass: false,
-                                message: "'" + actual + "'" +
-                                    " caused error '" + msg +
-                                    "' but expected '" + exp + "'",
-                            };
-                        }
-                    }
-                },
-            };
+    const prefix = "KaTeX parse error: ";
+
+    expect.extend({
+        toFailWithParseError: function(actual, expected) {
+            try {
+                parseTree(actual, defaultSettings);
+                return {
+                    pass: false,
+                    message: "'" + actual + "' parsed without error",
+                };
+            } catch (e) {
+                if (expected === undefined) {
+                    return {
+                        pass: true,
+                        message: "'" + actual + "' parsed with error",
+                    };
+                }
+                const msg = e.message;
+                const exp = prefix + expected;
+                if (msg === exp) {
+                    return {
+                        pass: true,
+                        message: "'" + actual + "'" +
+                            " parsed with error '" + expected + "'",
+                    };
+                } else if (msg.slice(0, 19) === prefix) {
+                    return {
+                        pass: false,
+                        message: "'" + actual + "'" +
+                            " parsed with error '" + msg.slice(19) +
+                            "' but expected '" + expected + "'",
+                    };
+                } else {
+                    return {
+                        pass: false,
+                        message: "'" + actual + "'" +
+                            " caused error '" + msg +
+                            "' but expected '" + exp + "'",
+                    };
+                }
+            }
         },
     });
 });
@@ -106,6 +102,16 @@ describe("Parser:", function() {
             expect("1^{2+3}_4^5").toFailWithParseError(
                    "Double superscript at position 10: 1^{2+3}_4^̲5");
         });
+        it("rejects double superscripts involving primes", function() {
+            expect("1'_2^3").toFailWithParseError(
+                   "Double superscript at position 5: 1'_2^̲3");
+            expect("1^2'").toFailWithParseError(
+                   "Double superscript at position 4: 1^2'̲");
+            expect("1^2_3'").toFailWithParseError(
+                   "Double superscript at position 6: 1^2_3'̲");
+            expect("1'_2'").toFailWithParseError(
+                   "Double superscript at position 5: 1'_2'̲");
+        });
         it("rejects double subscripts", function() {
             expect("1_2_3").toFailWithParseError(
                    "Double subscript at position 4: 1_2_̲3");
@@ -133,6 +139,11 @@ describe("Parser:", function() {
             expect("\\text{\\sqrt2 is irrational}").toFailWithParseError(
                 "Can't use function '\\sqrt' in text mode" +
                 " at position 7: \\text{\\̲s̲q̲r̲t̲2 is irrational…");
+        });
+        it("rejects text-mode-only functions in math mode", function() {
+            expect("\\'echec").toFailWithParseError(
+                "Can't use function '\\'' in math mode" +
+                " at position 1: \\̲'̲echec");
         });
     });
 
@@ -214,19 +225,19 @@ describe("Parser.expect calls:", function() {
 
     describe("#parseSpecialGroup expecting braces", function() {
         it("complains about missing { for color", function() {
-            expect("\\color#ffffff{text}").toFailWithParseError(
-                   "Expected '{', got '#' at position 7:" +
-                   " \\color#̲ffffff{text}");
+            expect("\\textcolor#ffffff{text}").toFailWithParseError(
+                   "Expected '{', got '#' at position 11:" +
+                   " \\textcolor#̲ffffff{text}");
         });
         it("complains about missing { for size", function() {
             expect("\\rule{1em}[2em]").toFailWithParseError(
-                   "Expected '{', got '[' at position 11: \\rule{1em}[̲2em]");
+                   "Invalid size: '[' at position 11: \\rule{1em}[̲2em]");
         });
         // Can't test for the [ of an optional group since it's optional
         it("complains about missing } for color", function() {
-            expect("\\color{#ffffff{text}").toFailWithParseError(
-                   "Invalid color: '#ffffff{text' at position 8:" +
-                   " \\color{#̲f̲f̲f̲f̲f̲f̲{̲t̲e̲x̲t̲}");
+            expect("\\textcolor{#ffffff{text}").toFailWithParseError(
+                   "Invalid color: '#ffffff{text' at position 12:" +
+                   " \\textcolor{#̲f̲f̲f̲f̲f̲f̲{̲t̲e̲x̲t̲}");
         });
         it("complains about missing ] for size", function() {
             expect("\\rule[1em{2em}{3em}").toFailWithParseError(
@@ -239,9 +250,9 @@ describe("Parser.expect calls:", function() {
                    " at position 7: \\rule[1̲e̲m̲");
         });
         it("complains about missing } for color at end of input", function() {
-            expect("\\color{#123456").toFailWithParseError(
+            expect("\\textcolor{#123456").toFailWithParseError(
                    "Unexpected end of input in color" +
-                   " at position 8: \\color{#̲1̲2̲3̲4̲5̲6̲");
+                   " at position 12: \\textcolor{#̲1̲2̲3̲4̲5̲6̲");
         });
     });
 
@@ -275,7 +286,7 @@ describe("environments.js:", function() {
         });
         it("rejects incorrectly scoped \\end", function() {
             expect("{\\begin{matrix}1}\\end{matrix}").toFailWithParseError(
-                   "Expected & or \\\\\ or \\end at position 17:" +
+                   "Expected & or \\\\ or \\end at position 17:" +
                    " …\\begin{matrix}1}̲\\end{matrix}");
         });
     });
@@ -331,9 +342,9 @@ describe("Lexer:", function() {
 
     describe("#_innerLexColor", function() {
         it("reject hex notation without #", function() {
-            expect("\\color{1a2b3c}{foo}").toFailWithParseError(
+            expect("\\textcolor{1a2b3c}{foo}").toFailWithParseError(
                    "Invalid color: '1a2b3c'" +
-                   " at position 8: \\color{1̲a̲2̲b̲3̲c̲}{foo}");
+                   " at position 12: \\textcolor{1̲a̲2̲b̲3̲c̲}{foo}");
         });
     });
 
