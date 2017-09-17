@@ -17,6 +17,8 @@ import { calculateSize } from "./units";
 import utils from "./utils";
 import stretchy from "./stretchy";
 
+const makeSpanInput = buildCommon.makeSpanInput;
+
 const isSpace = function(node) {
     return node instanceof domTree.span && node.classes[0] === "mspace";
 };
@@ -316,16 +318,16 @@ groupTypes.text = function(group, options) {
         inner, newOptions);
 };
 
-groupTypes.input_tag = function(group, options, prev) {
+groupTypes.input_tag = function(group, options) {
     return buildCommon.makeInput(group.value.size, group.value.domObjId);
 };
 
-groupTypes.input_number_tag = function(group, options, prev) {
+groupTypes.input_number_tag = function(group, options) {
     return buildCommon.makeNumberInput(group.value.size, group.value.domObjId);
 };
 
-groupTypes.span_input = function(group, options, prev) {
-    return buildCommon.makeSpanInput(
+groupTypes.span_input = function(group, options) {
+    return makeSpanInput(
         ["text", "mord", options.style.cls()],
         buildExpression(group.value.body, options.reset()),
         null,
@@ -335,7 +337,7 @@ groupTypes.span_input = function(group, options, prev) {
     );
 };
 
-groupTypes.newline = function(group, options, prev) {
+groupTypes.newline = function(group, options) {
     return buildCommon.makeBr();
 };
 
