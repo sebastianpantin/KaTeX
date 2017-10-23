@@ -345,6 +345,9 @@ const makeVList = function(children, positionType, positionData, options) {
         }
     }
     pstrutSize += 2;
+    if (pstrutSize === 2.7) {
+        pstrutSize = 2.4;
+    }
     const pstrut = makeSpan(["pstrut"], []);
     pstrut.style.height = pstrutSize + "em";
 
@@ -360,7 +363,16 @@ const makeVList = function(children, positionType, positionData, options) {
             const child = children[i].elem;
 
             const childWrap = makeSpan([], [pstrut, child]);
-            childWrap.style.top = (-pstrutSize - currPos - child.depth) + "em";
+            if (i === 0 && pstrutSize !== 2.4) {
+                childWrap.style.top = (-pstrutSize - currPos - child.depth) + "em";
+                childWrap.style.top += 0.3;
+            } else if (i === 2 && pstrutSize !== 2.4) {
+                childWrap.style.top = (-pstrutSize - currPos - child.depth) + "em";
+            } else {
+                childWrap.style.top = (-pstrutSize - currPos - child.depth) + "em";
+                childWrap.style.top -= 0.3;
+            }
+
             if (children[i].marginLeft) {
                 childWrap.style.marginLeft = children[i].marginLeft;
             }
