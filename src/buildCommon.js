@@ -364,13 +364,11 @@ const makeVList = function(children, positionType, positionData, options) {
 
             const childWrap = makeSpan([], [pstrut, child]);
             if (i === 0 && pstrutSize !== 2.4) {
-                childWrap.style.top = (-pstrutSize - currPos - child.depth) + "em";
-                childWrap.style.top += 0.3;
+                childWrap.style.top = (-pstrutSize - currPos - child.depth + 0.3) + "em";
             } else if (i === 2 && pstrutSize !== 2.4) {
                 childWrap.style.top = (-pstrutSize - currPos - child.depth) + "em";
             } else {
-                childWrap.style.top = (-pstrutSize - currPos - child.depth) + "em";
-                childWrap.style.top -= 0.3;
+                childWrap.style.top = (-pstrutSize - currPos - child.depth - 0.3) + "em";
             }
 
             if (children[i].marginLeft) {
