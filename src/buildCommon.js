@@ -345,7 +345,7 @@ const makeVList = function(children, positionType, positionData, options) {
         }
     }
     pstrutSize += 2;
-    if (pstrutSize === 2.7) {
+    if (pstrutSize === 2.7 || pstrutSize === 2.5) {
         pstrutSize = 2.4;
     }
     const pstrut = makeSpan(["pstrut"], []);
